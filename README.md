@@ -1,0 +1,3 @@
+# Projetão
+
+- 22/11/2024, 20:44:O objetivo desse projeto é ser exagerado, guardando projetos para demonstrar meu conhecimento em diversas linguagens e conceitos de programação. Quero utilizar Golang, Node e Java, integrando tudo e mostrando meu conhecimento nessas linguagens. Quero documentar todas as APIs e conectar tudo com microservices. Quero utilizar diferentes bancos de dados, como Postgres e Mongodb, utilizar GraphQL, microfrontend, arquitetura hexagonal e todas essas palavras que fazem seu CEO que acha que entende de tecnologia ficar pirado. Não sei o que o projeto se tornará, mas vou começar aos poucos.
