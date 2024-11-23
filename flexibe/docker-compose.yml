@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  flexibe_database:
+    image: postgres:15-alpine
+    container_name: postgres_alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_DB}
+    ports:
+      - '5432:5432'
+
+    networks:
+      - flexibe_database_network
+
+  flexibe_database_manager:
+    image: adminer
+    container_name: adminer
+    ports:
+      - '8080:8080'
+
+    networks:
+      - flexibe_database_network
+
+networks:
+  flexibe_database_network:
+    driver: bridge
