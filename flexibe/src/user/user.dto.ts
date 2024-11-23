@@ -26,3 +26,15 @@ export class CreateUserDTO {
   })
   password: string;
 }
+
+export class UpdateUserDTO {
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({ example: 'John', description: "User's first name" })
+  firstName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({ example: 'Doe', description: "User's last name" })
+  lastName: string;
+}
