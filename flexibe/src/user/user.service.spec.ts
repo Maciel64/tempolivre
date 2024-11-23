@@ -2,6 +2,7 @@ import { Test } from '@nestjs/testing';
 import IUserRepository, { UserRepository } from './user.repository';
 import { UserService } from './user.service';
 import { User } from './User';
+import { UserAlreadyRegisteredException } from './user.exception';
 
 export const mockedUserRepository: IUserRepository = {
   get: jest.fn(),
@@ -42,13 +43,13 @@ describe('UsersService test suit', () => {
         UserService,
         {
           provide: UserRepository,
-          useValue: mockedUserRepository, // Use o mock corretamente
+          useValue: mockedUserRepository,
         },
       ],
     }).compile();
 
     userService = module.get<UserService>(UserService);
-    userRepository = module.get(UserRepository) as jest.Mocked<UserRepository>; // Força o tipo como mock
+    userRepository = module.get(UserRepository) as jest.Mocked<UserRepository>;
   });
 
   afterEach(() => {
@@ -60,12 +61,12 @@ describe('UsersService test suit', () => {
   });
 
   it('Should return all users', async () => {
-    userRepository.getAll.mockResolvedValue([mockUser]); // Agora `getAll` funciona como esperado
+    userRepository.getAll.mockResolvedValue([mockUser]);
 
     const users = await userService.getAll();
 
     expect(users).toEqual([mockUser]);
-    expect(userRepository.getAll).toHaveBeenCalledTimes(1); // Certifique-se de testar o método correto
+    expect(userRepository.getAll).toHaveBeenCalledTimes(1);
   });
 
   it('Should be able to create an User', async () => {
@@ -76,6 +77,15 @@ describe('UsersService test suit', () => {
 
     expect(user).toEqual(mockUser);
     expect(userRepository.create).toHaveBeenCalledTimes(1);
+  });
+
+  it('Should not be able to create an User, as it throws UserAlreadyRegisteredException', async () => {
+    userRepository.create.mockResolvedValue(mockUser);
+    userRepository.getByEmail.mockResolvedValue(mockUser);
+
+    expect(userService.create(mockUser)).rejects.toThrow(
+      UserAlreadyRegisteredException,
+    );
   });
 
   it('Should be able to update an User', async () => {
